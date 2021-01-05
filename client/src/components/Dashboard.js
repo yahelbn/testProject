@@ -1,43 +1,38 @@
-import React, { useState } from "react";
-import { Button, Card, Alert } from "react-bootstrap";
-import { useAuth } from "../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import React from "react";
+import Particles from "react-particles-js";
+
+import {
+  DashboardContainer,
+  Header,
+  LinkDash,
+  Row,
+} from "../components/Elements/DashBoardElements";
 
 export default function Dashboard() {
-  const [error, setError] = useState("");
-  const { currentUser, logout } = useAuth();
-  const history = useHistory();
+  /*  Particles animation  */
+  const praticlesOut = {
+    particles: {
+      number: {
+        value: 150,
+        density: {
+          enable: true,
+          value_area: 800,
+        },
+      },
+    },
+  };
 
-  async function handleLogOut() {
-    setError("");
-
-    try {
-      await logout();
-      history.push("/login");
-    } catch {
-      setError("Failed to log out");
-    }
-  }
-
+  /*  The first page before all begins */
   return (
     <>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center md-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong>
-          {currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-100" mt-3>
-            Update Profile
-          </Link>
-        </Card.Body>
-      </Card>
-
-      <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogOut}>
-          Log Out
-        </Button>
-      </div>
+      <DashboardContainer>
+        <Header>Welcome to Yahel's System</Header>
+        <Row>
+          <LinkDash to={"/login"}>Log In</LinkDash>
+          <LinkDash to={"/signup"}>Sign Up</LinkDash>
+        </Row>
+        <Particles params={praticlesOut} />
+      </DashboardContainer>
     </>
   );
 }

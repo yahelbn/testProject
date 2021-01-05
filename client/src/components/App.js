@@ -1,30 +1,58 @@
 import { Container } from "react-bootstrap";
-import AuthProvider from "../contexts/AuthContext";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+/*  Pages Component  */
 import SignUp from "./SignUp";
 import Login from "./Login";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import HomePage from "./HomePage";
 import Dashboard from "./Dashboard";
-import PrivateRouter from "./PrivateRouter";
+import AdminPage from "./AdminPage";
 
+import { AppContainer } from "./Elements/AppElements";
+
+/*  The Main App and contain all the routes  */
 function App() {
   return (
-    <Container
-      className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
-    >
-      <div className="w-100" style={{ maxWidth: "400px" }}>
+    <AppContainer>
+      <Container
+        className="d-flex align-items-center justify-content-center"
+        style={{ height: "100%", width: "100%" }}
+      >
         <Router>
-          <AuthProvider>
-            <Switch>
-              <PrivateRouter exact path="/" component={Dashboard} />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => <Dashboard {...props} />}
+            />
 
-              <Route path="/signup" component={SignUp} />
-              <Route path="/login" component={Login} />
-            </Switch>
-          </AuthProvider>
+            <Route
+              exact
+              path="/login"
+              render={(props) => <Login {...props} />}
+            />
+
+            <Route
+              exact
+              path="/signup"
+              render={(props) => <SignUp {...props} />}
+            />
+
+            <Route
+              exact
+              path="/homepage"
+              render={(props) => <HomePage {...props} />}
+            />
+
+            <Route
+              exact
+              path="/adminpage"
+              render={(props) => <AdminPage {...props} />}
+            />
+          </Switch>
         </Router>
-      </div>
-    </Container>
+      </Container>
+    </AppContainer>
   );
 }
 
